@@ -47,9 +47,20 @@
   const saveData = navigator.connection && navigator.connection.saveData;
   if (heroEl && holder && !reduce && !saveData) {
     const id = holder.dataset.video;
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
+    const loadYT = () => {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    };
+    // Ligger filmen som assets/hero.mp4 används den (tyst autoplay, ingen spelare). Annars YouTube.
+    fetch("assets/hero.mp4", { method: "HEAD" }).then((r) => {
+      if (!r.ok) throw new Error("ingen fil");
+      const v = document.createElement("video");
+      v.className = "hero-file"; v.src = "assets/hero.mp4";
+      v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+      holder.replaceWith(v);
+      v.play().catch(() => {});
+    }).catch(loadYT);
     // Klipp ur filmen som loopas, [start, slut] i sekunder: 5:54–6:11 och 6:21–6:29
     const SEGMENTS = [[354, 371], [381, 389]];
     let player, seg = 0, timer, hopping = false, userPaused = false;
