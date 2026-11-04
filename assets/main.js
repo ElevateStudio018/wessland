@@ -68,7 +68,7 @@
         setTimeout(() => { player.seekTo(SEGMENTS[seg][0], true); hopping = false; }, 600);
         return;
       }
-      show(t >= s + 0.3 && t < e - 0.5);
+      show(t >= s + 0.1 && t < e - 0.5);
     };
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("hero-player", {
