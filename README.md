@@ -30,7 +30,7 @@ assets/main.js        Meny, reveal, YouTube-hero, formulär
 
 ## Hero-filmen
 
-Videon `-3Vx2rEhS84` ("Renovering av Västlands kyrktorn", Tierps pastorat, bildspel och film av Kristin Schyllner) spelas tyst i loop som bakgrund via YouTube IFrame API. Byt film genom att ändra `data-video` på `#hero-player` i `index.html`. Sidan visar ett stillbild-poster först och hoppar över videon vid `prefers-reduced-motion` och data saver. Det finns en pausknapp.
+Videon `-3Vx2rEhS84` ("Renovering av Västlands kyrktorn", Tierps pastorat, bildspel och film av Kristin Schyllner) spelas tyst som bakgrund via YouTube IFrame API. Bara två klipp loopas: 5:54–6:11 och 6:21–6:29 (`SEGMENTS` i `assets/main.js`, i sekunder). Byt film genom att ändra `data-video` på `#hero-player` i `index.html` och klippen i `SEGMENTS`. Vid bytet mellan klippen kan det bli ett litet hack, eftersom spelaren hoppar i filmen. Sidan visar ett stillbild-poster först och hoppar över videon vid `prefers-reduced-motion` och data saver. Det finns en pausknapp.
 
 ## Att göra innan lansering
 

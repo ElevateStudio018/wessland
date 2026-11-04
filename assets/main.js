@@ -50,16 +50,29 @@
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
-    let player;
+    // Klipp ur filmen som loopas, [start, slut] i sekunder: 5:54–6:11 och 6:21–6:29
+    const SEGMENTS = [[354, 371], [381, 389]];
+    let player, seg = 0, timer;
+    const next = () => {
+      seg = (seg + 1) % SEGMENTS.length;
+      player.seekTo(SEGMENTS[seg][0], true);
+    };
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("hero-player", {
         videoId: id,
-        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: id, playsinline: 1, modestbranding: 1, rel: 0, disablekb: 1, iv_load_policy: 3, fs: 0 },
+        playerVars: { autoplay: 1, mute: 1, controls: 0, playsinline: 1, modestbranding: 1, rel: 0, disablekb: 1, iv_load_policy: 3, fs: 0, start: SEGMENTS[0][0] },
         events: {
           onReady: (e) => { e.target.mute(); e.target.playVideo(); },
           onStateChange: (e) => {
-            if (e.data === YT.PlayerState.PLAYING) { heroEl.classList.add("playing"); if (toggle) toggle.textContent = "Pausa film"; }
+            if (e.data === YT.PlayerState.PLAYING) {
+              heroEl.classList.add("playing");
+              if (toggle) toggle.textContent = "Pausa film";
+              if (!timer) timer = setInterval(() => {
+                if (player.getCurrentTime() >= SEGMENTS[seg][1] - 0.1) next();
+              }, 150);
+            }
             if (e.data === YT.PlayerState.PAUSED && toggle) toggle.textContent = "Spela film";
+            if (e.data === YT.PlayerState.ENDED) { seg = SEGMENTS.length - 1; next(); player.playVideo(); }
           },
         },
       });
