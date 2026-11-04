@@ -1,9 +1,20 @@
 <!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Västlands kyrka – bakgrund</title>
-<style>html,body{margin:0;height:100%;background:#16140f;overflow:hidden}#p{position:absolute;top:50%;left:50%;width:max(118vw,209.8vh);height:max(118vh,66.4vw);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity .5s}body.on #p{opacity:1}</style></head><body><div id="p"></div>
+<style>html,body{margin:0;height:100%;background:#16140f;overflow:hidden}.pl{position:absolute;top:50%;left:50%;width:max(118vw,209.8vh);height:max(118vh,66.4vw);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity .7s ease}.pl.on{opacity:1}</style></head><body>
 <script>
-var S=[[354,371],[381,389]],seg=0,pl,hop=false;
+var S=[[354,371],[381,389]],RATE=.75,P=[],cur=0,sw=false,shown=false;
 var t=document.createElement("script");t.src="https://www.youtube.com/iframe_api";document.head.appendChild(t);
-function show(o){document.body.classList.toggle("on",o)}
-window.onYouTubeIframeAPIReady=function(){pl=new YT.Player("p",{videoId:"-3Vx2rEhS84",playerVars:{autoplay:1,mute:1,controls:0,playsinline:1,modestbranding:1,rel:0,disablekb:1,iv_load_policy:3,fs:0,start:S[0][0]},events:{onReady:function(e){e.target.mute();e.target.seekTo(S[0][0],true);e.target.playVideo()},onStateChange:function(e){if(e.data!==1){show(false);if(e.data===2||e.data===5||e.data===0)pl.playVideo()}}}});
-setInterval(function(){if(!pl||!pl.getPlayerState||hop)return;if(pl.getPlayerState()!==1){show(false);return}var c=pl.getCurrentTime(),s=S[seg][0],e=S[seg][1];if(c>=e-.5){show(false);hop=true;seg=(seg+1)%S.length;setTimeout(function(){pl.seekTo(S[seg][0],true);hop=false},600);return}show(c>=s+.1)},100)};
+function el(i){return document.getElementById("p"+i)}
+function mk(i){var d=document.createElement("div");d.id="p"+i;d.className="pl";document.body.appendChild(d);
+P[i]=new YT.Player(d.id,{videoId:"-3Vx2rEhS84",playerVars:{autoplay:1,mute:1,controls:0,playsinline:1,modestbranding:1,rel:0,disablekb:1,iv_load_policy:3,fs:0,start:S[i][0]},events:{
+onReady:function(e){e.target.mute();e.target.seekTo(S[i][0],true);e.target.playVideo()},
+onStateChange:function(e){var p=P[i];
+if(e.data===1){p.setPlaybackRate(RATE);if(i!==cur&&!sw){p.pauseVideo();p.seekTo(S[i][0],true)}}
+else if(i===cur&&e.data!==3){if(e.data===2||e.data===5||e.data===0)p.playVideo()}}}})}
+window.onYouTubeIframeAPIReady=function(){mk(0);mk(1);
+setInterval(function(){var a=P[cur],b=P[1-cur];if(!a||!b||!a.getPlayerState||!b.getPlayerState||sw||a.getPlayerState()!==1)return;
+var c=a.getCurrentTime();
+if(!shown&&c>=S[cur][0]+.1){el(cur).classList.add("on");shown=true}
+if(shown&&c>=S[cur][1]-1.2){sw=true;var n=1-cur;b.seekTo(S[n][0],true);b.playVideo();
+var w=setInterval(function(){if(b.getPlayerState()===1&&b.getCurrentTime()>=S[n][0]+.1){clearInterval(w);el(n).classList.add("on");el(cur).classList.remove("on");var o=cur;cur=n;
+setTimeout(function(){P[o].pauseVideo();P[o].seekTo(S[o][0],true);sw=false},900)}},60)}},100)};
 </script></body></html>
