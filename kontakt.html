@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt – Wessland</title>
+<meta name="description" content="Kontakta Wessland Resort: 070 626 00 11, info@wessland.se. Bolstan 102, Västland, Tierp.">
+<meta property="og:title" content="Kontakt – Wessland">
+<meta property="og:description" content="Kontakta Wessland Resort: 070 626 00 11, info@wessland.se. Bolstan 102, Västland, Tierp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/655339914f7b98232f3c6f0a/f0bcd433-68f0-4a17-908e-1d90642fd950/DJI_0588.jpg">
+<meta name="theme-color" content="#16140f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/main.js"></script>
+</head>
+<body>
+<a class="skip" href="#innehall">Hoppa till innehåll</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Wessland, startsida">Wessland</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Meny</button>
+    <nav class="nav" id="nav" aria-label="Huvudmeny"><a href="konferens.html">Konferens</a><a href="konstpavag.html">Konst på väg</a><a href="filmproduktion.html">Filmproduktion</a><a href="upplevelser.html">Upplevelser</a><a href="kontakt.html" aria-current="page">Kontakt</a></nav>
+  </div>
+</header>
+<main id="innehall">
+<section class="page-hero">
+  <img src="https://images.squarespace-cdn.com/content/v1/655339914f7b98232f3c6f0a/077fefaf-01c0-42fd-8ef2-fece11d80393/DJI_0592.jpg" alt="Wessland från luften" fetchpriority="high">
+  <div class="wrap">
+    <h1>Kontakt</h1>
+    <p>Välkommen att kontakta oss för mer information och bokning.</p>
+  </div>
+</section>
+<section>
+  <div class="wrap intro-grid">
+    <div class="kicker reveal">Kontakta oss</div>
+    <div class="reveal">
+      <p class="lead">Verksamheten på Wessland drivs av <a href="https://www.matsbrolin.se/" rel="noopener">Mats Brolin</a>, hans sambo Deniz och grannarna Eva och Carolina.</p>
+      <p>Vår ambition är att skapa och erbjuda en miljö för kreativitet och upplevelser för alla som besöker oss, oavsett om ni vill bo över på fritiden eller utveckla er själva eller er verksamhet.</p>
+      <p style="margin-top:32px;font-size:1.5rem;font-weight:300;letter-spacing:-.02em;line-height:1.5">
+        <a href="tel:+46706260011" style="text-decoration:none">070 626 00 11</a><br>
+        <a href="mailto:info@wessland.se" style="text-decoration:none">info@wessland.se</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="hitta">
+  <div class="wrap split wide">
+    <div class="reveal">
+      <div class="kicker">Hitta hit</div>
+      <h2>Västland, en dryg mil öster om Tierp</h2>
+      <p style="margin-top:28px">Med bil från Uppsala tar det cirka 50 minuter, drygt 7 mil. Från Arlanda är det 14 mil. Det finns gott om parkeringsplatser och möjlighet att ladda bilen.</p>
+      <p>Det går bra att åka kollektivt ända fram. Tåg och buss från Uppsala tar en knapp timme, och bussen från Tierp stannar några hundra meter från stugan. Det är en dryg mil till Tierp och Skärplinge där det finns butiker och annan service.</p>
+      <p class="muted">Adress: Bolstan 102, Västland, Tierp</p>
+      <a class="link-arrow" href="https://maps.app.goo.gl/gxCvDnk9aMv6jvku6" rel="noopener">Se större karta</a>
+    </div>
+    <figure class="reveal"><img src="https://images.squarespace-cdn.com/content/v1/655339914f7b98232f3c6f0a/ab9df6cb-b86e-47ac-a204-4c7782ae51de/karta+V%C3%A4stland.jpg" alt="Karta över Västland" loading="lazy" style="aspect-ratio:4/3"></figure>
+  </div>
+</section>
+
+<section id="formular">
+  <div class="wrap intro-grid">
+    <div class="reveal">
+      <div class="kicker">Förfrågan</div>
+      <h2>Boka eller fråga</h2>
+      <p class="muted" style="margin-top:20px">Ring på 070 626 00 11, eller fyll i formuläret så öppnas ett färdigt mejl till oss.</p>
+    </div>
+    <form class="form reveal" id="kontaktform">
+      <div class="two">
+        <label>Namn<input name="namn" required autocomplete="name"></label>
+        <label>Telefon<input name="telefon" type="tel" autocomplete="tel"></label>
+      </div>
+      <label>Gäller<select name="amne"><option>Konferens</option><option>Filmproduktion</option><option>Boende</option><option>Upplevelser och aktiviteter</option><option>Annat</option></select></label>
+      <div class="two">
+        <label>Antal personer<input name="antal" type="number" min="1" inputmode="numeric"></label>
+        <label>Önskat datum<input name="datum" placeholder="t.ex. vecka 21"></label>
+      </div>
+      <label>Meddelande<textarea name="meddelande" required></textarea></label>
+      <div><button class="btn on-light" type="submit">Skapa mejl</button></div>
+      <small>Inget sparas på sidan. Mejlet skickas från din egen mejlklient till info@wessland.se.</small>
+    </form>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="index.html">Wessland</a>
+        <p>Upplev, skapa, utveckla.<br>Bolstan 102, Västland, Tierp</p>
+      </div>
+      <div>
+        <h4>Utforska</h4>
+        <ul><li><a href="konferens.html">Konferens</a></li><li><a href="konstpavag.html">Konst på väg</a></li><li><a href="filmproduktion.html">Filmproduktion</a></li><li><a href="upplevelser.html">Upplevelser</a></li><li><a href="kontakt.html">Kontakt</a></li></ul>
+      </div>
+      <div>
+        <h4>Hör av dig</h4>
+        <ul>
+          <li><a href="tel:+46706260011">070 626 00 11</a></li>
+          <li><a href="mailto:info@wessland.se">info@wessland.se</a></li>
+          <li><a href="https://maps.app.goo.gl/gxCvDnk9aMv6jvku6" rel="noopener">Hitta hit</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal"><span>© Wessland Resort</span><span>Wesslands gamla gjuteri 1881–1953</span></div>
+  </div>
+</footer>
+</body>
+</html>
