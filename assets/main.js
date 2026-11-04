@@ -52,38 +52,49 @@
     document.head.appendChild(tag);
     // Klipp ur filmen som loopas, [start, slut] i sekunder: 5:54–6:11 och 6:21–6:29
     const SEGMENTS = [[354, 371], [381, 389]];
-    let player, seg = 0, timer;
-    const next = () => {
-      seg = (seg + 1) % SEGMENTS.length;
-      player.seekTo(SEGMENTS[seg][0], true);
+    let player, seg = 0, timer, hopping = false, userPaused = false;
+    const show = (on) => heroEl.classList.toggle("playing", on);
+    const tick = () => {
+      if (!player || !player.getPlayerState || hopping) return;
+      const st = player.getPlayerState();
+      const t = player.getCurrentTime();
+      const [s, e] = SEGMENTS[seg];
+      if (st !== 1) { show(false); return; }
+      if (t >= e - 0.5) {
+        // tona ut, hoppa, visa först när vi landat på klippets första bild
+        show(false);
+        hopping = true;
+        seg = (seg + 1) % SEGMENTS.length;
+        setTimeout(() => { player.seekTo(SEGMENTS[seg][0], true); hopping = false; }, 600);
+        return;
+      }
+      show(t >= s + 0.3 && t < e - 0.5);
     };
     window.onYouTubeIframeAPIReady = () => {
       player = new YT.Player("hero-player", {
         videoId: id,
         playerVars: { autoplay: 1, mute: 1, controls: 0, playsinline: 1, modestbranding: 1, rel: 0, disablekb: 1, iv_load_policy: 3, fs: 0, start: SEGMENTS[0][0] },
         events: {
-          onReady: (e) => { e.target.mute(); e.target.playVideo(); },
+          onReady: (e) => { e.target.mute(); e.target.seekTo(SEGMENTS[0][0], true); e.target.playVideo(); },
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.PLAYING) {
-              heroEl.classList.add("playing");
               if (toggle) toggle.textContent = "Pausa film";
-              if (!timer) timer = setInterval(() => {
-                if (player.getCurrentTime() >= SEGMENTS[seg][1] - 0.1) next();
-              }, 150);
+              if (!timer) timer = setInterval(tick, 100);
+            } else {
+              show(false);
+              if (e.data === YT.PlayerState.PAUSED && toggle) toggle.textContent = "Spela film";
+              if (e.data === YT.PlayerState.ENDED) { seg = 0; player.seekTo(SEGMENTS[0][0], true); player.playVideo(); }
+              if (e.data === YT.PlayerState.PAUSED && !userPaused) player.playVideo();
             }
-            if (e.data === YT.PlayerState.PAUSED && toggle) toggle.textContent = "Spela film";
-            if (e.data === YT.PlayerState.ENDED) { seg = SEGMENTS.length - 1; next(); player.playVideo(); }
           },
         },
       });
-      const frame = () => document.getElementById("hero-player");
-      setTimeout(() => { const f = frame(); if (f) f.classList.add("hero-video"); }, 0);
     };
     if (toggle) {
       toggle.hidden = false;
       toggle.addEventListener("click", () => {
         if (!player || !player.getPlayerState) return;
-        if (player.getPlayerState() === 1) player.pauseVideo(); else player.playVideo();
+        if (player.getPlayerState() === 1) { userPaused = true; player.pauseVideo(); } else { userPaused = false; player.playVideo(); }
       });
     }
   }
